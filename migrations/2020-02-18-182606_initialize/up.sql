@@ -1,0 +1,7 @@
+CREATE TABLE users (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  firstname TEXT NOT NULL,
+  lastname TEXT NOT NULL,
+  age INTEGER NOT NULL,
+  email TEXT NOT NULL
+)
