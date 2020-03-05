@@ -69,7 +69,7 @@ pub enum Payload {
 pub enum ResponsePayload<'a> {
     Payload(Payload),
     JsonValue(JsonValue),
-    Slice(&'a str),
+    Str(&'a str),
 }
 
 impl Serialize for ResponsePayload<'_> {
@@ -89,7 +89,7 @@ impl Serialize for ResponsePayload<'_> {
             ResponsePayload::JsonValue(j) => {
                 j.0.serialize(serializer)
             },
-            ResponsePayload::Slice(str) => {
+            ResponsePayload::Str(str) => {
                 serializer.serialize_str(str)
             }
         };

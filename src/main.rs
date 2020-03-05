@@ -29,7 +29,7 @@ fn list_users<'a>() -> status::Custom<Json<JsonResponses<'a>>> {
             Status::Ok,
             ResponseType::Success),
         Err(_) => json_response(
-            ResponsePayload::Slice("An error occurred while loading records"),
+            ResponsePayload::Str("An error occurred while loading records"),
             Status::InternalServerError,
             ResponseType::Error)
     }
@@ -48,7 +48,7 @@ fn create_user<'a>(user: Json<User>) -> status::Custom<Json<JsonResponses<'a>>> 
             Status::Created,
             ResponseType::Success),
         Err(_) => json_response(
-            ResponsePayload::Slice("An error occurred while creating the record"),
+            ResponsePayload::Str("An error occurred while creating the record"),
             Status::InternalServerError,
             ResponseType::Error)
     }
@@ -66,7 +66,7 @@ fn retrieve_user<'a>(uid: i32) -> status::Custom<Json<JsonResponses<'a>>> {
             Status::Ok,
             ResponseType::Success),
         Err(_) => json_response(
-            ResponsePayload::Slice("Record not found"),
+            ResponsePayload::Str("Record not found"),
             Status::NotFound,
             ResponseType::Fail)
     }
@@ -82,7 +82,7 @@ fn update_user<'a>(uid: i32, user: Json<User>) -> status::Custom<Json<JsonRespon
     let user_to_update = match users.find(uid).first::<User>(&connection) {
         Ok(u) => u,
         Err(_) => return json_response(
-            ResponsePayload::Slice("Record not found"),
+            ResponsePayload::Str("Record not found"),
             Status::NotFound,
             ResponseType::Fail)
     };
@@ -93,7 +93,7 @@ fn update_user<'a>(uid: i32, user: Json<User>) -> status::Custom<Json<JsonRespon
             Status::Ok,
             ResponseType::Success),
         Err(_) => json_response(
-            ResponsePayload::Slice("An error occurred while updating the record"),
+            ResponsePayload::Str("An error occurred while updating the record"),
             Status::InternalServerError,
             ResponseType::Error)
     }
@@ -107,7 +107,7 @@ fn delete_user<'a>(uid: i32) -> status::Custom<Json<JsonResponses<'a>>> {
     if let Err(_) = users.find(uid)
         .first::<User>(&connection) {
         return json_response(
-            ResponsePayload::Slice("Record not found"),
+            ResponsePayload::Str("Record not found"),
             Status::NotFound,
             ResponseType::Fail)
     };
@@ -118,7 +118,7 @@ fn delete_user<'a>(uid: i32) -> status::Custom<Json<JsonResponses<'a>>> {
             Status::Ok,
             ResponseType::Success),
         Err(_) => return json_response(
-            ResponsePayload::Slice("An error occurred while deleting the record"),
+            ResponsePayload::Str("An error occurred while deleting the record"),
             Status::InternalServerError,
             ResponseType::Error)
     }
